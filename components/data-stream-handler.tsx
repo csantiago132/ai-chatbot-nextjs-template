@@ -3,7 +3,7 @@
 import { useChat } from 'ai/react';
 import { useEffect, useRef } from 'react';
 import { artifactDefinitions } from './artifact';
-import {ArtifactKind} from "@/lib/enums";
+import { ArtifactKind } from '@/lib/enums';
 import { Suggestion } from '@/lib/db/schema';
 import { initialArtifactData, useArtifact } from '@/hooks/use-artifact';
 

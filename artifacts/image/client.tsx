@@ -2,7 +2,7 @@ import { Artifact } from '@/components/create-artifact';
 import { CopyIcon, RedoIcon, UndoIcon } from '@/components/icons';
 import { ImageEditor } from '@/components/image-editor';
 import { toast } from 'sonner';
-import {ArtifactKind} from "@/lib/enums";
+import { ArtifactKind } from '@/lib/enums';
 
 export const imageArtifact = new Artifact<ArtifactKind.IMAGE>({
   kind: ArtifactKind.IMAGE,
@@ -37,8 +37,6 @@ export const imageArtifact = new Artifact<ArtifactKind.IMAGE>({
       },
       isDisabled: ({ isCurrentVersion }) => {
         return isCurrentVersion;
-
-
       },
     },
     {

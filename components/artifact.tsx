@@ -30,14 +30,16 @@ import { imageArtifact } from '@/artifacts/image/client';
 import { codeArtifact } from '@/artifacts/code/client';
 import { sheetArtifact } from '@/artifacts/sheet/client';
 import { textArtifact } from '@/artifacts/text/client';
+import { moleculeArtifact } from '@/artifacts/molecule/client';
 import equal from 'fast-deep-equal';
-import {ArtifactKind} from "@/lib/enums";
+import { ArtifactKind } from '@/lib/enums';
 
 export const artifactDefinitions = [
   textArtifact,
   codeArtifact,
   imageArtifact,
   sheetArtifact,
+  moleculeArtifact,
 ];
 
 export interface UIArtifact {

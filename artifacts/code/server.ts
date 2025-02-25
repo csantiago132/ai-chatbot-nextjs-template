@@ -3,7 +3,7 @@ import { streamObject } from 'ai';
 import { myProvider } from '@/lib/ai/models';
 import { codePrompt, updateDocumentPrompt } from '@/lib/ai/prompts';
 import { createDocumentHandler } from '@/lib/artifacts/server';
-import {ArtifactKind} from "@/lib/enums";
+import { ArtifactKind } from '@/lib/enums';
 
 export const codeDocumentHandler = createDocumentHandler<ArtifactKind.CODE>({
   kind: ArtifactKind.CODE,

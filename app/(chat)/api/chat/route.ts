@@ -67,14 +67,14 @@ export async function POST(request: Request) {
         messages,
         maxSteps: 5,
         experimental_activeTools:
-          selectedChatModel === 'chat-model-reasoning'
-            ? []
-            : [
-                'getWeather',
-                'createDocument',
-                'updateDocument',
-                'requestSuggestions',
-              ],
+            selectedChatModel === 'chat-model-reasoning'
+                ? []
+                : [
+                  'getWeather',
+                  'createDocument',
+                  'updateDocument',
+                  'requestSuggestions',
+                ],
         experimental_transform: smoothStream({ chunking: 'word' }),
         experimental_generateMessageId: generateUUID,
         tools: {
@@ -122,10 +122,11 @@ export async function POST(request: Request) {
         sendReasoning: true,
       });
     },
-    onError: () => {
+    onError: (error) => {
+      console.error(error)
       return 'Oops, an error occured!';
     },
-  });
+  })
 }
 
 export async function DELETE(request: Request) {

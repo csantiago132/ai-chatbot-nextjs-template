@@ -1,6 +1,6 @@
 'use client';
 
-import type { Attachment, Message } from 'ai';
+import type {Attachment, ChatRequestOptions, Message} from 'ai';
 import { useChat } from 'ai/react';
 import { useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
@@ -64,6 +64,18 @@ export function Chat({
   const [attachments, setAttachments] = useState<Array<Attachment>>([]);
   const isArtifactVisible = useArtifactSelector((state) => state.isVisible);
 
+  const handleSetInput: typeof setInput= (inputValue): void => {
+    setInput(inputValue)
+  }
+
+  const handleChatSubmit: typeof handleSubmit = (event ,chatRequestOptions
+  ): void => {
+    handleSubmit(event, chatRequestOptions)
+  }
+
+  const handleSetMessages: typeof setMessages= (messages) => {
+    setMessages(messages)
+  }
   return (
     <>
       <div className="flex flex-col min-w-0 h-dvh bg-background">
@@ -90,14 +102,14 @@ export function Chat({
             <MultimodalInput
               chatId={id}
               input={input}
-              setInput={setInput}
-              handleSubmit={handleSubmit}
+              setInput={handleSetInput}
+              handleSubmit={handleChatSubmit}
               isLoading={isLoading}
               stop={stop}
               attachments={attachments}
               setAttachments={setAttachments}
               messages={messages}
-              setMessages={setMessages}
+              setMessages={handleSetMessages}
               append={append}
             />
           )}
@@ -107,8 +119,8 @@ export function Chat({
       <Artifact
         chatId={id}
         input={input}
-        setInput={setInput}
-        handleSubmit={handleSubmit}
+        setInput={handleSetInput}
+        handleSubmit={handleChatSubmit}
         isLoading={isLoading}
         stop={stop}
         attachments={attachments}

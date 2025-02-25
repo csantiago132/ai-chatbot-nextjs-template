@@ -1,5 +1,5 @@
 import { auth } from '@/app/(auth)/auth';
-import {ArtifactKind} from "@/lib/enums";
+import { ArtifactKind } from '@/lib/enums';
 import {
   deleteDocumentsByIdAfterTimestamp,
   getDocumentsById,
