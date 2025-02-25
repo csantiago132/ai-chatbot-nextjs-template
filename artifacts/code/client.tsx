@@ -15,6 +15,7 @@ import {
   ConsoleOutput,
   ConsoleOutputContent,
 } from '@/components/console';
+import {ArtifactKind} from "@/lib/enums";
 
 const OUTPUT_HANDLERS = {
   matplotlib: `
@@ -66,8 +67,8 @@ interface Metadata {
   outputs: Array<ConsoleOutput>;
 }
 
-export const codeArtifact = new Artifact<'code', Metadata>({
-  kind: 'code',
+export const codeArtifact = new Artifact<ArtifactKind.CODE, Metadata>({
+  kind: ArtifactKind.CODE,
   description:
     'Useful for code generation; Code execution is only available for python code.',
   initialize: async ({ setMetadata }) => {

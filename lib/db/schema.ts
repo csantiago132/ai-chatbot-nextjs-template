@@ -10,6 +10,7 @@ import {
   foreignKey,
   boolean,
 } from 'drizzle-orm/pg-core';
+import {ArtifactKind} from "@/lib/enums";
 
 export const user = pgTable('User', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
@@ -72,9 +73,15 @@ export const document = pgTable(
     createdAt: timestamp('createdAt').notNull(),
     title: text('title').notNull(),
     content: text('content'),
-    kind: varchar('text', { enum: ['text', 'code', 'image', 'sheet'] })
+    kind: varchar(ArtifactKind.TEXT, { enum: [
+            ArtifactKind.TEXT,
+            ArtifactKind.CODE,
+            ArtifactKind.IMAGE,
+            ArtifactKind.SHEET,
+            ArtifactKind.MOLECULE,
+        ] })
       .notNull()
-      .default('text'),
+      .default(ArtifactKind.TEXT),
     userId: uuid('userId')
       .notNull()
       .references(() => user.id),

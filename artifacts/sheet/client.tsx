@@ -9,11 +9,12 @@ import {
 import { SpreadsheetEditor } from '@/components/sheet-editor';
 import { parse, unparse } from 'papaparse';
 import { toast } from 'sonner';
+import {ArtifactKind} from "@/lib/enums";
 
 type Metadata = any;
 
-export const sheetArtifact = new Artifact<'sheet', Metadata>({
-  kind: 'sheet',
+export const sheetArtifact = new Artifact<ArtifactKind.SHEET, Metadata>({
+  kind: ArtifactKind.SHEET,
   description: 'Useful for working with spreadsheets',
   initialize: async () => {},
   onStreamPart: ({ setArtifact, streamPart }) => {

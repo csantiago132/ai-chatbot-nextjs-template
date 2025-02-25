@@ -2,9 +2,10 @@ import { Artifact } from '@/components/create-artifact';
 import { CopyIcon, RedoIcon, UndoIcon } from '@/components/icons';
 import { ImageEditor } from '@/components/image-editor';
 import { toast } from 'sonner';
+import {ArtifactKind} from "@/lib/enums";
 
-export const imageArtifact = new Artifact({
-  kind: 'image',
+export const imageArtifact = new Artifact<ArtifactKind.IMAGE>({
+  kind: ArtifactKind.IMAGE,
   description: 'Useful for image generation',
   onStreamPart: ({ streamPart, setArtifact }) => {
     if (streamPart.type === 'image-delta') {
@@ -25,11 +26,7 @@ export const imageArtifact = new Artifact({
         handleVersionChange('prev');
       },
       isDisabled: ({ currentVersionIndex }) => {
-        if (currentVersionIndex === 0) {
-          return true;
-        }
-
-        return false;
+        return currentVersionIndex === 0;
       },
     },
     {
@@ -39,11 +36,9 @@ export const imageArtifact = new Artifact({
         handleVersionChange('next');
       },
       isDisabled: ({ isCurrentVersion }) => {
-        if (isCurrentVersion) {
-          return true;
-        }
+        return isCurrentVersion;
 
-        return false;
+
       },
     },
     {

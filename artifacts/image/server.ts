@@ -1,9 +1,10 @@
 import { myProvider } from '@/lib/ai/models';
 import { createDocumentHandler } from '@/lib/artifacts/server';
 import { experimental_generateImage } from 'ai';
+import {ArtifactKind} from "@/lib/enums";
 
-export const imageDocumentHandler = createDocumentHandler<'image'>({
-  kind: 'image',
+export const imageDocumentHandler = createDocumentHandler<ArtifactKind.IMAGE>({
+  kind: ArtifactKind.IMAGE,
   onCreateDocument: async ({ title, dataStream }) => {
     let draftContent = '';
 

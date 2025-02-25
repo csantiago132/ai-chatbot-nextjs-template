@@ -13,13 +13,14 @@ import {
 import { Suggestion } from '@/lib/db/schema';
 import { toast } from 'sonner';
 import { getSuggestions } from '../actions';
+import {ArtifactKind} from "@/lib/enums";
 
 interface TextArtifactMetadata {
   suggestions: Array<Suggestion>;
 }
 
-export const textArtifact = new Artifact<'text', TextArtifactMetadata>({
-  kind: 'text',
+export const textArtifact = new Artifact<ArtifactKind.TEXT, TextArtifactMetadata>({
+  kind: ArtifactKind.TEXT,
   description: 'Useful for text content, like drafting essays and emails.',
   initialize: async ({ documentId, setMetadata }) => {
     const suggestions = await getSuggestions({ documentId });
@@ -68,7 +69,7 @@ export const textArtifact = new Artifact<'text', TextArtifactMetadata>({
     metadata,
   }) => {
     if (isLoading) {
-      return <DocumentSkeleton artifactKind="text" />;
+      return <DocumentSkeleton artifactKind={ArtifactKind.TEXT} />;
     }
 
     if (mode === 'diff') {
@@ -107,11 +108,9 @@ export const textArtifact = new Artifact<'text', TextArtifactMetadata>({
         handleVersionChange('toggle');
       },
       isDisabled: ({ currentVersionIndex, setMetadata }) => {
-        if (currentVersionIndex === 0) {
-          return true;
-        }
+        return currentVersionIndex === 0;
 
-        return false;
+
       },
     },
     {
@@ -121,11 +120,9 @@ export const textArtifact = new Artifact<'text', TextArtifactMetadata>({
         handleVersionChange('prev');
       },
       isDisabled: ({ currentVersionIndex }) => {
-        if (currentVersionIndex === 0) {
-          return true;
-        }
+        return currentVersionIndex === 0;
 
-        return false;
+
       },
     },
     {
@@ -135,11 +132,9 @@ export const textArtifact = new Artifact<'text', TextArtifactMetadata>({
         handleVersionChange('next');
       },
       isDisabled: ({ isCurrentVersion }) => {
-        if (isCurrentVersion) {
-          return true;
-        }
+        return isCurrentVersion;
 
-        return false;
+
       },
     },
     {

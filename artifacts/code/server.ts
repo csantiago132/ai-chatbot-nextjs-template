@@ -3,9 +3,10 @@ import { streamObject } from 'ai';
 import { myProvider } from '@/lib/ai/models';
 import { codePrompt, updateDocumentPrompt } from '@/lib/ai/prompts';
 import { createDocumentHandler } from '@/lib/artifacts/server';
+import {ArtifactKind} from "@/lib/enums";
 
-export const codeDocumentHandler = createDocumentHandler<'code'>({
-  kind: 'code',
+export const codeDocumentHandler = createDocumentHandler<ArtifactKind.CODE>({
+  kind: ArtifactKind.CODE,
   onCreateDocument: async ({ title, dataStream }) => {
     let draftContent = '';
 
@@ -43,7 +44,7 @@ export const codeDocumentHandler = createDocumentHandler<'code'>({
 
     const { fullStream } = streamObject({
       model: myProvider.languageModel('artifacts-model'),
-      system: updateDocumentPrompt(document.content, 'code'),
+      system: updateDocumentPrompt(document.content, ArtifactKind.CODE),
       prompt: description,
       schema: z.object({
         code: z.string(),
