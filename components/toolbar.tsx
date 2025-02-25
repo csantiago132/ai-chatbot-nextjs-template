@@ -37,7 +37,8 @@ import {
   StopIcon,
   SummarizeIcon,
 } from './icons';
-import { artifactDefinitions, ArtifactKind } from './artifact';
+import { artifactDefinitions } from './artifact';
+import { ArtifactKind } from '@/lib/enums';
 import { ArtifactToolbarItem } from './create-artifact';
 import { UseChatHelpers } from 'ai/react';
 
@@ -477,7 +478,7 @@ const PureToolbar = ({
 export const Toolbar = memo(PureToolbar, (prevProps, nextProps) => {
   if (prevProps.isLoading !== nextProps.isLoading) return false;
   if (prevProps.isToolbarVisible !== nextProps.isToolbarVisible) return false;
-  if (prevProps.artifactKind !== nextProps.artifactKind) return false;
+  return prevProps.artifactKind === nextProps.artifactKind;
 
-  return true;
+
 });

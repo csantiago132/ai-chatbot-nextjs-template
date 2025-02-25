@@ -8,7 +8,8 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import { ArtifactKind, UIArtifact } from './artifact';
+import {  UIArtifact } from './artifact';
+import {ArtifactKind} from "@/lib/enums";
 import { FileIcon, FullscreenIcon, ImageIcon, LoaderIcon } from './icons';
 import { cn, fetcher } from '@/lib/utils';
 import { Document } from '@/lib/db/schema';
@@ -195,8 +196,8 @@ const PureHitboxLayer = ({
 };
 
 const HitboxLayer = memo(PureHitboxLayer, (prevProps, nextProps) => {
-  if (!equal(prevProps.result, nextProps.result)) return false;
-  return true;
+  return equal(prevProps.result, nextProps.result);
+
 });
 
 const PureDocumentHeader = ({
@@ -229,9 +230,9 @@ const PureDocumentHeader = ({
 
 const DocumentHeader = memo(PureDocumentHeader, (prevProps, nextProps) => {
   if (prevProps.title !== nextProps.title) return false;
-  if (prevProps.isStreaming !== nextProps.isStreaming) return false;
+  return prevProps.isStreaming === nextProps.isStreaming;
 
-  return true;
+
 });
 
 const DocumentContent = ({ document }: { document: Document }) => {

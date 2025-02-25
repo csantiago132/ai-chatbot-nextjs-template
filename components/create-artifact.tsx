@@ -3,6 +3,7 @@ import { UseChatHelpers } from 'ai/react';
 import { ComponentType, Dispatch, ReactNode, SetStateAction } from 'react';
 import { DataStreamDelta } from './data-stream-handler';
 import { UIArtifact } from './artifact';
+import {ArtifactKind} from "@/lib/enums";
 
 export type ArtifactActionContext<M = any> = {
   content: string;
@@ -53,7 +54,7 @@ interface InitializeParameters<M = any> {
   setMetadata: Dispatch<SetStateAction<M>>;
 }
 
-type ArtifactConfig<T extends string, M = any> = {
+type ArtifactConfig<T extends ArtifactKind, M = any> = {
   kind: T;
   description: string;
   content: ComponentType<ArtifactContent<M>>;
@@ -67,7 +68,7 @@ type ArtifactConfig<T extends string, M = any> = {
   }) => void;
 };
 
-export class Artifact<T extends string, M = any> {
+export class Artifact<T extends ArtifactKind, M = any> implements ArtifactConfig<T,M>{
   readonly kind: T;
   readonly description: string;
   readonly content: ComponentType<ArtifactContent<M>>;

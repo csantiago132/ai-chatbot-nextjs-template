@@ -3,11 +3,12 @@
 import useSWR from 'swr';
 import { UIArtifact } from '@/components/artifact';
 import { useCallback, useMemo } from 'react';
+import {ArtifactKind} from "@/lib/enums";
 
 export const initialArtifactData: UIArtifact = {
   documentId: 'init',
   content: '',
-  kind: 'text',
+  kind: ArtifactKind.TEXT,
   title: '',
   status: 'idle',
   isVisible: false,

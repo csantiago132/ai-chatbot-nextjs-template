@@ -3,9 +3,10 @@ import { sheetPrompt, updateDocumentPrompt } from '@/lib/ai/prompts';
 import { createDocumentHandler } from '@/lib/artifacts/server';
 import { streamObject } from 'ai';
 import { z } from 'zod';
+import {ArtifactKind} from "@/lib/enums";
 
-export const sheetDocumentHandler = createDocumentHandler<'sheet'>({
-  kind: 'sheet',
+export const sheetDocumentHandler = createDocumentHandler<ArtifactKind.SHEET>({
+  kind: ArtifactKind.SHEET,
   onCreateDocument: async ({ title, dataStream }) => {
     let draftContent = '';
 
@@ -48,7 +49,7 @@ export const sheetDocumentHandler = createDocumentHandler<'sheet'>({
 
     const { fullStream } = streamObject({
       model: myProvider.languageModel('artifact-model'),
-      system: updateDocumentPrompt(document.content, 'sheet'),
+      system: updateDocumentPrompt(document.content, ArtifactKind.SHEET),
       prompt: description,
       schema: z.object({
         csv: z.string(),

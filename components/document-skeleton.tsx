@@ -1,6 +1,6 @@
 'use client';
 
-import { ArtifactKind } from './artifact';
+import { ArtifactKind } from '@/lib/enums';
 
 export const DocumentSkeleton = ({
   artifactKind,

@@ -2,9 +2,10 @@ import { smoothStream, streamText } from 'ai';
 import { myProvider } from '@/lib/ai/models';
 import { createDocumentHandler } from '@/lib/artifacts/server';
 import { updateDocumentPrompt } from '@/lib/ai/prompts';
+import {ArtifactKind} from "@/lib/enums";
 
-export const textDocumentHandler = createDocumentHandler<'text'>({
-  kind: 'text',
+export const textDocumentHandler = createDocumentHandler<ArtifactKind.TEXT>({
+  kind: ArtifactKind.TEXT,
   onCreateDocument: async ({ title, dataStream }) => {
     let draftContent = '';
 
@@ -38,7 +39,7 @@ export const textDocumentHandler = createDocumentHandler<'text'>({
 
     const { fullStream } = streamText({
       model: myProvider.languageModel('artifact-model'),
-      system: updateDocumentPrompt(document.content, 'text'),
+      system: updateDocumentPrompt(document.content, ArtifactKind.TEXT),
       experimental_transform: smoothStream({ chunking: 'word' }),
       prompt: description,
       experimental_providerMetadata: {

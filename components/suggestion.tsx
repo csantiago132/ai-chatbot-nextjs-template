@@ -1,15 +1,15 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
-import { useWindowSize } from 'usehooks-ts';
+import {AnimatePresence, motion} from 'framer-motion';
+import {useState} from 'react';
+import {useWindowSize} from 'usehooks-ts';
 
-import type { UISuggestion } from '@/lib/editor/suggestions';
+import type {UISuggestion} from '@/lib/editor/suggestions';
 
-import { CrossIcon, MessageIcon } from './icons';
-import { Button } from './ui/button';
-import { cn } from '@/lib/utils';
-import { ArtifactKind } from './artifact';
+import {CrossIcon, MessageIcon} from './icons';
+import {Button} from './ui/button';
+import {cn} from '@/lib/utils';
+import {ArtifactKind} from '@/lib/enums';
 
 export const Suggestion = ({
   suggestion,
@@ -28,8 +28,8 @@ export const Suggestion = ({
       {!isExpanded ? (
         <motion.div
           className={cn('cursor-pointer text-muted-foreground p-1', {
-            'absolute -right-8': artifactKind === 'text',
-            'sticky top-0 right-4': artifactKind === 'code',
+            'absolute -right-8': artifactKind === ArtifactKind.TEXT,
+            'sticky top-0 right-4': artifactKind === ArtifactKind.CODE,
           })}
           onClick={() => {
             setIsExpanded(true);
