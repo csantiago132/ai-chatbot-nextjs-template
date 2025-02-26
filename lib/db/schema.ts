@@ -10,7 +10,7 @@ import {
   foreignKey,
   boolean,
 } from 'drizzle-orm/pg-core';
-import { ArtifactKind } from '@/lib/enums';
+import { ArtifactKind, DocumentArtifactKind } from '@/lib/enums';
 
 export const user = pgTable('User', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
@@ -95,7 +95,9 @@ export const document = pgTable(
   },
 );
 
-export type Document = InferSelectModel<typeof document>;
+export type Document = InferSelectModel<typeof document> & {
+  parts?: Array<{ type: DocumentArtifactKind; data: string }>;
+};
 
 export const suggestion = pgTable(
   'Suggestion',

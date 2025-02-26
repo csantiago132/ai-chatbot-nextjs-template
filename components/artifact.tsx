@@ -460,47 +460,48 @@ function PureArtifact({
                 setMetadata={setMetadata}
               />
             </div>
-
             <div className="dark:bg-muted bg-background h-full overflow-y-scroll !max-w-full items-center">
+              <div className={'flex flex-row py-12 px-20'}>
+                <pre>{JSON.stringify(document?.parts, null, 2)}</pre>
+              </div>
               <artifactDefinition.content
-                title={artifact.title}
-                content={
-                  isCurrentVersion
-                    ? artifact.content
-                    : getDocumentContentById(currentVersionIndex)
-                }
-                mode={mode}
-                status={artifact.status}
-                currentVersionIndex={currentVersionIndex}
-                suggestions={[]}
-                onSaveContent={saveContent}
-                isInline={false}
-                isCurrentVersion={isCurrentVersion}
-                getDocumentContentById={getDocumentContentById}
-                isLoading={isDocumentsFetching && !artifact.content}
-                metadata={metadata}
-                setMetadata={setMetadata}
+                  title={artifact.title}
+                  content={
+                    isCurrentVersion
+                        ? artifact.content
+                        : getDocumentContentById(currentVersionIndex)
+                  }
+                  mode={mode}
+                  status={artifact.status}
+                  currentVersionIndex={currentVersionIndex}
+                  suggestions={[]}
+                  onSaveContent={saveContent}
+                  isInline={false}
+                  isCurrentVersion={isCurrentVersion}
+                  getDocumentContentById={getDocumentContentById}
+                  isLoading={isDocumentsFetching && !artifact.content}
+                  metadata={metadata}
+                  setMetadata={setMetadata}
               />
-
               <AnimatePresence>
                 {isCurrentVersion && (
-                  <Toolbar
-                    isToolbarVisible={isToolbarVisible}
-                    setIsToolbarVisible={setIsToolbarVisible}
-                    append={append}
-                    isLoading={isLoading}
-                    stop={stop}
-                    setMessages={setMessages}
-                    artifactKind={artifact.kind}
-                  />
+                    <Toolbar
+                        isToolbarVisible={isToolbarVisible}
+                        setIsToolbarVisible={setIsToolbarVisible}
+                        append={append}
+                        isLoading={isLoading}
+                        stop={stop}
+                        setMessages={setMessages}
+                        artifactKind={artifact.kind}
+                    />
                 )}
               </AnimatePresence>
             </div>
 
             <AnimatePresence>
               {!isCurrentVersion && (
-                <VersionFooter
-                  currentVersionIndex={currentVersionIndex}
+                  <VersionFooter
+                      currentVersionIndex={currentVersionIndex}
                   documents={documents}
                   handleVersionChange={handleVersionChange}
                 />

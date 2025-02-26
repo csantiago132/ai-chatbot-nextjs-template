@@ -1,10 +1,9 @@
 'use client';
 
-import type {Attachment, ChatRequestOptions, Message} from 'ai';
+import type { Attachment, ChatRequestOptions, Message } from 'ai';
 import { useChat } from 'ai/react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
-
 import { ChatHeader } from '@/components/chat-header';
 import type { Vote } from '@/lib/db/schema';
 import { fetcher, generateUUID } from '@/lib/utils';
@@ -64,18 +63,19 @@ export function Chat({
   const [attachments, setAttachments] = useState<Array<Attachment>>([]);
   const isArtifactVisible = useArtifactSelector((state) => state.isVisible);
 
-  const handleSetInput: typeof setInput= (inputValue): void => {
-    setInput(inputValue)
-  }
-
-  const handleChatSubmit: typeof handleSubmit = (event ,chatRequestOptions
+  const handleChatSubmit: typeof handleSubmit = (
+    event,
+    chatRequestOptions,
   ): void => {
-    handleSubmit(event, chatRequestOptions)
-  }
+    // tries to save money by avoiding empty tokens
+    if (input.length === 0) return;
 
-  const handleSetMessages: typeof setMessages= (messages) => {
-    setMessages(messages)
-  }
+    handleSubmit(event, chatRequestOptions);
+  };
+
+  const handleSetMessages: typeof setMessages = (messages) => {
+    setMessages(messages);
+  };
   return (
     <>
       <div className="flex flex-col min-w-0 h-dvh bg-background">
@@ -102,7 +102,7 @@ export function Chat({
             <MultimodalInput
               chatId={id}
               input={input}
-              setInput={handleSetInput}
+              setInput={setInput}
               handleSubmit={handleChatSubmit}
               isLoading={isLoading}
               stop={stop}
@@ -115,11 +115,10 @@ export function Chat({
           )}
         </form>
       </div>
-
       <Artifact
         chatId={id}
         input={input}
-        setInput={handleSetInput}
+        setInput={setInput}
         handleSubmit={handleChatSubmit}
         isLoading={isLoading}
         stop={stop}
