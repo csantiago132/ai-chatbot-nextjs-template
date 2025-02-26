@@ -18,7 +18,6 @@ function PureSuggestedActions({ chatId, append }: SuggestedActionsProps) {
   const suggestedActions = [
     {
       title: 'Show me the molecule visualizer demo',
-      label: `this will create a prompt to "create a ${MOLECULE_DEMO}"`,
       action: `create a ${MOLECULE_DEMO}`,
     },
   ];
@@ -35,10 +34,9 @@ function PureSuggestedActions({ chatId, append }: SuggestedActionsProps) {
           className={index > 1 ? 'hidden sm:block' : 'block'}
         >
           <Button
-            variant="ghost"
+            variant="default"
             onClick={async () => {
               window.history.replaceState({}, '', `/chat/${chatId}`);
-
               append({
                 role: 'user',
                 content: suggestedAction.action,
@@ -47,9 +45,6 @@ function PureSuggestedActions({ chatId, append }: SuggestedActionsProps) {
             className="text-left border rounded-xl px-4 py-3.5 text-sm flex-1 gap-1 sm:flex-col w-full h-auto justify-start items-start"
           >
             <span className="font-medium">{suggestedAction.title}</span>
-            <span className="text-muted-foreground">
-              {suggestedAction.label}
-            </span>
           </Button>
         </motion.div>
       ))}

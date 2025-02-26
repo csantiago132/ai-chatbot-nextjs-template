@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 import { MessageIcon, VercelIcon } from './icons';
+import { MOLECULE_DEMO } from '@/artifacts/molecule/constants';
 
 export const Overview = () => {
   return (
@@ -28,12 +29,16 @@ export const Overview = () => {
           >
             open source
           </Link>{' '}
-          chatbot template built with Next.js and the AI SDK by Vercel. It uses
-          the{' '}
-          <code className="rounded-md bg-muted px-1 py-0.5">streamText</code>{' '}
-          function in the server and the{' '}
-          <code className="rounded-md bg-muted px-1 py-0.5">useChat</code> hook
-          on the client to create a seamless chat experience.
+          chatbot template built with Next.js and the AI SDK by Vercel. It is my
+          submission for the Founding Frontend Engineer role at a Stealth
+          Startup.
+        </p>
+        <p>
+          Press &#34;Show me the molecule visualizer demo&#34; below—it&#39;ll
+          create a<pre>`{`create a ${MOLECULE_DEMO}`}`</pre> prompt, a Molecule
+          Visualizer Document will expand, providing information & showing its
+          3D structure. Alongside it, a Predicted Toxicity Panel will display
+          insights on its potential toxicity.
         </p>
         <p>
           You can learn more about the AI SDK by visiting the{' '}
