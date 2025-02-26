@@ -1,42 +1,20 @@
-import { memo, useEffect, useRef, type FC } from 'react';
-import isEqual from 'lodash/isEqual';
-
-interface Atom {
-  atomId: number;
-  atomName: string;
-  residue: string;
-  chain: string;
-  residueId: number;
-  x: number;
-  y: number;
-  z: number;
-  occupancy: number;
-  temperatureFactor: number;
-  element: string;
-}
-
-interface Header {
-  proteinBinding: string;
-  date: string;
-  code: string;
-}
-
-interface PdbData {
-  header: Header;
-  title: string;
-  atoms: Atom[];
-}
+import { memo, useEffect, useRef, type FC, CSSProperties } from 'react';
+import { get, isEqual } from 'lodash-es';
 
 interface MoleculeViewerProps {
-  pdbData: Record<string, unknown>;
+  className?: string;
+  pdbData: string | unknown;
   size?: 'small' | 'large';
+  style?: CSSProperties;
 }
 
-const PureMoleculeViewer: FC<MoleculeViewerProps> = ({ pdbData }) => {
+const PureMoleculeViewer: FC<MoleculeViewerProps> = (props) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const { pdbData } = props;
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || typeof pdbData !== 'string') return;
+
     // @ts-ignore as its being imported directly on the HTML file
     const viewer = $3Dmol.createViewer(containerRef.current, {
       backgroundColor: 'ghostwhite',
@@ -44,11 +22,12 @@ const PureMoleculeViewer: FC<MoleculeViewerProps> = ({ pdbData }) => {
 
     // @ts-ignore as its being imported directly on the HTML file
     $3Dmol.download(
-      'pdb:1MO8',
+      pdbData,
       viewer,
       { multimodel: true, frames: true },
       function () {
         viewer.setStyle({}, { cartoon: { color: 'spectrum' } });
+        viewer.zoom(1.2, 1000);
         viewer.render();
       },
     );
@@ -57,7 +36,14 @@ const PureMoleculeViewer: FC<MoleculeViewerProps> = ({ pdbData }) => {
   return (
     <div
       ref={containerRef}
-      style={{ width: '400px', height: '600px', position: 'relative' }}
+      className={props.className}
+      style={{
+        ...get(props, ['style'], {
+          width: '350px',
+          height: '560px',
+        }),
+        position: 'relative',
+      }}
     />
   );
 };

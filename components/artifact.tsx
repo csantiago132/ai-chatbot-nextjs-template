@@ -472,7 +472,7 @@ function PureArtifact({
                       return (
                         <MoleculeViewer
                           key={`${document.type}_${index}`}
-                          pdbData={document.data}
+                          pdbData={get(document, ['data', 'fileId'])}
                         />
                       );
                     case DocumentArtifactKind.PREDICTED_PROPERTIES:
