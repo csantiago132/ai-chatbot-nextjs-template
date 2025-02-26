@@ -55,6 +55,8 @@ export default async function RootLayout({
             __html: THEME_COLOR_SCRIPT,
           }}
         />
+        <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+        <script src="https://3Dmol.org/build/3Dmol.ui-min.js"></script>
       </head>
       <body className="antialiased">
         <ThemeProvider

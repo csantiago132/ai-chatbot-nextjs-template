@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Button } from './ui/button';
 import { ChatRequestOptions, CreateMessage, Message } from 'ai';
 import { memo } from 'react';
-import {MOLECULE_DEMO} from "@/artifacts/molecule/constants";
+import { MOLECULE_DEMO } from '@/artifacts/molecule/constants';
 
 interface SuggestedActionsProps {
   chatId: string;

@@ -96,7 +96,7 @@ export const document = pgTable(
 );
 
 export type Document = InferSelectModel<typeof document> & {
-  parts?: Array<{ type: DocumentArtifactKind; data: string }>;
+  parts?: Array<{ type: DocumentArtifactKind; data: Record<string, unknown> }>;
 };
 
 export const suggestion = pgTable(

@@ -29,9 +29,7 @@ import { MOLECULE_DEMO } from '@/artifacts/molecule/constants';
 import {
   chatDemoParts,
   createMoleculeDemo,
-  demoPbdData,
-  predictedProperties,
-} from '@/artifacts/molecule/demoData';
+} from '@/artifacts/molecule/demo-data';
 import { ArtifactKind } from '@/lib/enums';
 import { get } from 'lodash-es';
 

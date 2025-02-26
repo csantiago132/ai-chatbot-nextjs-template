@@ -5,12 +5,7 @@ import {
   getDocumentsById,
   saveDocument,
 } from '@/lib/db/queries';
-import type { Message } from 'ai';
-import {
-  demoPbdData,
-  documentDemoParts,
-  predictedProperties,
-} from '@/artifacts/molecule/demoData';
+import { documentDemoParts } from '@/artifacts/molecule/demo-data';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
