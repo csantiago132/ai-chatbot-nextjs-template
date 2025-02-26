@@ -3,7 +3,7 @@ import { UseChatHelpers } from 'ai/react';
 import { ComponentType, Dispatch, ReactNode, SetStateAction } from 'react';
 import { DataStreamDelta } from './data-stream-handler';
 import { UIArtifact } from './artifact';
-import {ArtifactKind} from "@/lib/enums";
+import { ArtifactKind } from '@/lib/enums';
 
 export type ArtifactActionContext<M = any> = {
   content: string;
@@ -68,7 +68,9 @@ type ArtifactConfig<T extends ArtifactKind, M = any> = {
   }) => void;
 };
 
-export class Artifact<T extends ArtifactKind, M = any> implements ArtifactConfig<T,M>{
+export class Artifact<T extends ArtifactKind, M = any>
+  implements ArtifactConfig<T, M>
+{
   readonly kind: T;
   readonly description: string;
   readonly content: ComponentType<ArtifactContent<M>>;

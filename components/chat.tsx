@@ -1,10 +1,9 @@
 'use client';
 
-import type { Attachment, Message } from 'ai';
+import type { Attachment, ChatRequestOptions, Message } from 'ai';
 import { useChat } from 'ai/react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
-
 import { ChatHeader } from '@/components/chat-header';
 import type { Vote } from '@/lib/db/schema';
 import { fetcher, generateUUID } from '@/lib/utils';
@@ -64,6 +63,19 @@ export function Chat({
   const [attachments, setAttachments] = useState<Array<Attachment>>([]);
   const isArtifactVisible = useArtifactSelector((state) => state.isVisible);
 
+  const handleChatSubmit: typeof handleSubmit = (
+    event,
+    chatRequestOptions,
+  ): void => {
+    // tries to save money by avoiding empty tokens
+    if (input.length === 0) return;
+
+    handleSubmit(event, chatRequestOptions);
+  };
+
+  const handleSetMessages: typeof setMessages = (messages) => {
+    setMessages(messages);
+  };
   return (
     <>
       <div className="flex flex-col min-w-0 h-dvh bg-background">
@@ -91,24 +103,23 @@ export function Chat({
               chatId={id}
               input={input}
               setInput={setInput}
-              handleSubmit={handleSubmit}
+              handleSubmit={handleChatSubmit}
               isLoading={isLoading}
               stop={stop}
               attachments={attachments}
               setAttachments={setAttachments}
               messages={messages}
-              setMessages={setMessages}
+              setMessages={handleSetMessages}
               append={append}
             />
           )}
         </form>
       </div>
-
       <Artifact
         chatId={id}
         input={input}
         setInput={setInput}
-        handleSubmit={handleSubmit}
+        handleSubmit={handleChatSubmit}
         isLoading={isLoading}
         stop={stop}
         attachments={attachments}

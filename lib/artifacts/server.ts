@@ -1,6 +1,7 @@
 import { codeDocumentHandler } from '@/artifacts/code/server';
 import { imageDocumentHandler } from '@/artifacts/image/server';
 import { sheetDocumentHandler } from '@/artifacts/sheet/server';
+import { moleculeDocumentHandler } from '@/artifacts/molecule/server';
 import { textDocumentHandler } from '@/artifacts/text/server';
 import { DataStreamWriter } from 'ai';
 import { Document } from '../db/schema';
@@ -94,6 +95,7 @@ export const documentHandlersByArtifactKind: Array<DocumentHandler> = [
   codeDocumentHandler,
   imageDocumentHandler,
   sheetDocumentHandler,
+  moleculeDocumentHandler,
 ];
 
 export const artifactKinds = [
@@ -103,4 +105,3 @@ export const artifactKinds = [
   ArtifactKind.SHEET,
   ArtifactKind.MOLECULE,
 ] as const;
-

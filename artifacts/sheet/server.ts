@@ -3,7 +3,7 @@ import { sheetPrompt, updateDocumentPrompt } from '@/lib/ai/prompts';
 import { createDocumentHandler } from '@/lib/artifacts/server';
 import { streamObject } from 'ai';
 import { z } from 'zod';
-import {ArtifactKind} from "@/lib/enums";
+import { ArtifactKind } from '@/lib/enums';
 
 export const sheetDocumentHandler = createDocumentHandler<ArtifactKind.SHEET>({
   kind: ArtifactKind.SHEET,

@@ -2,7 +2,7 @@ import { smoothStream, streamText } from 'ai';
 import { myProvider } from '@/lib/ai/models';
 import { createDocumentHandler } from '@/lib/artifacts/server';
 import { updateDocumentPrompt } from '@/lib/ai/prompts';
-import {ArtifactKind} from "@/lib/enums";
+import { ArtifactKind } from '@/lib/enums';
 
 export const textDocumentHandler = createDocumentHandler<ArtifactKind.TEXT>({
   kind: ArtifactKind.TEXT,

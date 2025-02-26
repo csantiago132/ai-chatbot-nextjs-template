@@ -15,7 +15,7 @@ import {
   ConsoleOutput,
   ConsoleOutputContent,
 } from '@/components/console';
-import {ArtifactKind} from "@/lib/enums";
+import { ArtifactKind } from '@/lib/enums';
 
 const OUTPUT_HANDLERS = {
   matplotlib: `

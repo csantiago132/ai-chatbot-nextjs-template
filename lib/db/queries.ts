@@ -4,10 +4,10 @@ import { genSaltSync, hashSync } from 'bcrypt-ts';
 import { and, asc, desc, eq, gt, gte, inArray } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
-
 import {
   user,
   chat,
+  type Document,
   type User,
   document,
   type Suggestion,
@@ -16,7 +16,7 @@ import {
   message,
   vote,
 } from './schema';
-import {ArtifactKind} from "@/lib/enums";
+import { ArtifactKind } from '@/lib/enums';
 
 // Optionally, if not using email/pass login, you can
 // use the Drizzle adapter for Auth.js / NextAuth
@@ -195,7 +195,9 @@ export async function saveDocument({
   }
 }
 
-export async function getDocumentsById({ id }: { id: string }) {
+export async function getDocumentsById({
+  id,
+}: { id: string }): Promise<Array<Document>> {
   try {
     const documents = await db
       .select()

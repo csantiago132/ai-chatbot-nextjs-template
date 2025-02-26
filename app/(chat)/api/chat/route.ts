@@ -1,6 +1,6 @@
 import {
-  type Message,
   createDataStreamResponse,
+  type Message,
   smoothStream,
   streamText,
 } from 'ai';
@@ -25,6 +25,13 @@ import { createDocument } from '@/lib/ai/tools/create-document';
 import { updateDocument } from '@/lib/ai/tools/update-document';
 import { requestSuggestions } from '@/lib/ai/tools/request-suggestions';
 import { getWeather } from '@/lib/ai/tools/get-weather';
+import { MOLECULE_DEMO } from '@/artifacts/molecule/constants';
+import {
+  chatDemoParts,
+  createMoleculeDemo,
+} from '@/artifacts/molecule/demo-data';
+import { ArtifactKind } from '@/lib/enums';
+import { get } from 'lodash-es';
 
 export const maxDuration = 60;
 
@@ -54,6 +61,23 @@ export async function POST(request: Request) {
     const title = await generateTitleFromUserMessage({ message: userMessage });
     await saveChat({ id, userId: session.user.id, title });
   }
+
+  const modeledUserMessageParts: Message['parts'] = [];
+
+  get(userMessage, ['parts'], []).forEach((artifact) => {
+    const shouldUpdateWithDemoData: Array<boolean> = [
+      artifact.type === ArtifactKind.TEXT,
+      get(artifact, ['text']) === `create a ${MOLECULE_DEMO}`,
+    ];
+
+    if (shouldUpdateWithDemoData.every(Boolean)) {
+      userMessage.content = createMoleculeDemo();
+      modeledUserMessageParts.concat(chatDemoParts);
+    }
+    modeledUserMessageParts.push(artifact);
+  });
+
+  userMessage.parts = modeledUserMessageParts;
 
   await saveMessages({
     messages: [{ ...userMessage, createdAt: new Date(), chatId: id }],
@@ -122,7 +146,8 @@ export async function POST(request: Request) {
         sendReasoning: true,
       });
     },
-    onError: () => {
+    onError: (error) => {
+      console.error(error);
       return 'Oops, an error occured!';
     },
   });

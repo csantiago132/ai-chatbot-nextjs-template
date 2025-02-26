@@ -15,16 +15,16 @@ import { toast } from 'sonner';
 import { getSuggestions } from '../actions';
 import { ArtifactKind } from '@/lib/enums';
 
-interface TextArtifactMetadata {
+interface MoleculeArtifactMetadata {
   suggestions: Array<Suggestion>;
 }
 
-export const textArtifact = new Artifact<
-  ArtifactKind.TEXT,
-  TextArtifactMetadata
+export const moleculeArtifact = new Artifact<
+  ArtifactKind.MOLECULE,
+  MoleculeArtifactMetadata
 >({
-  kind: ArtifactKind.TEXT,
-  description: 'Useful for text content, like drafting essays and emails.',
+  kind: ArtifactKind.MOLECULE,
+  description: 'Useful for visualizing molecules.',
   initialize: async ({ documentId, setMetadata }) => {
     const suggestions = await getSuggestions({ documentId });
 
@@ -72,7 +72,7 @@ export const textArtifact = new Artifact<
     metadata,
   }) => {
     if (isLoading) {
-      return <DocumentSkeleton artifactKind={ArtifactKind.TEXT} />;
+      return <DocumentSkeleton artifactKind={ArtifactKind.MOLECULE} />;
     }
 
     if (mode === 'diff') {

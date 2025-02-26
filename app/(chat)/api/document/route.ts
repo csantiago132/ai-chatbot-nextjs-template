@@ -1,10 +1,11 @@
 import { auth } from '@/app/(auth)/auth';
-import {ArtifactKind} from "@/lib/enums";
+import { ArtifactKind, DocumentArtifactKind } from '@/lib/enums';
 import {
   deleteDocumentsByIdAfterTimestamp,
   getDocumentsById,
   saveDocument,
 } from '@/lib/db/queries';
+import { documentDemoParts } from '@/artifacts/molecule/demo-data';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -31,6 +32,13 @@ export async function GET(request: Request) {
   if (document.userId !== session.user.id) {
     return new Response('Unauthorized', { status: 401 });
   }
+
+  documents.map((document) => {
+    if (document.kind === ArtifactKind.MOLECULE) {
+      // simulates adding data thru API or part of original response
+      document.parts = documentDemoParts;
+    }
+  });
 
   return Response.json(documents, { status: 200 });
 }

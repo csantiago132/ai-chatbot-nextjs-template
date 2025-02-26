@@ -5,3 +5,8 @@ export enum ArtifactKind {
   SHEET = 'sheet',
   MOLECULE = 'molecule',
 }
+
+export enum DocumentArtifactKind {
+  PBD_Data = 'PBD_Data',
+  PREDICTED_PROPERTIES = 'PREDICTED_PROPERTIES',
+}

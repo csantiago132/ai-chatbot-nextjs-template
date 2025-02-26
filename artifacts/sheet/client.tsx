@@ -9,7 +9,7 @@ import {
 import { SpreadsheetEditor } from '@/components/sheet-editor';
 import { parse, unparse } from 'papaparse';
 import { toast } from 'sonner';
-import {ArtifactKind} from "@/lib/enums";
+import { ArtifactKind } from '@/lib/enums';
 
 type Metadata = any;
 
@@ -66,11 +66,7 @@ export const sheetArtifact = new Artifact<ArtifactKind.SHEET, Metadata>({
         handleVersionChange('next');
       },
       isDisabled: ({ isCurrentVersion }) => {
-        if (isCurrentVersion) {
-          return true;
-        }
-
-        return false;
+        return isCurrentVersion;
       },
     },
     {

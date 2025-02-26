@@ -479,6 +479,4 @@ export const Toolbar = memo(PureToolbar, (prevProps, nextProps) => {
   if (prevProps.isLoading !== nextProps.isLoading) return false;
   if (prevProps.isToolbarVisible !== nextProps.isToolbarVisible) return false;
   return prevProps.artifactKind === nextProps.artifactKind;
-
-
 });

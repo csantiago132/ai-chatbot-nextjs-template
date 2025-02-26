@@ -55,6 +55,11 @@ export default async function RootLayout({
             __html: THEME_COLOR_SCRIPT,
           }}
         />
+        {/* needed to render molecule viz form https://3dmol.csb.pitt.edu */}
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script src="https://3Dmol.org/build/3Dmol.ui-min.js"></script>
       </head>
       <body className="antialiased">
         <ThemeProvider

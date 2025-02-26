@@ -30,14 +30,18 @@ import { imageArtifact } from '@/artifacts/image/client';
 import { codeArtifact } from '@/artifacts/code/client';
 import { sheetArtifact } from '@/artifacts/sheet/client';
 import { textArtifact } from '@/artifacts/text/client';
+import { moleculeArtifact } from '@/artifacts/molecule/client';
 import equal from 'fast-deep-equal';
-import {ArtifactKind} from "@/lib/enums";
+import { ArtifactKind, DocumentArtifactKind } from '@/lib/enums';
+import { get } from 'lodash-es';
+import { MoleculeViewer } from '@/artifacts/molecule/molecule-visualizer';
 
 export const artifactDefinitions = [
   textArtifact,
   codeArtifact,
   imageArtifact,
   sheetArtifact,
+  moleculeArtifact,
 ];
 
 export interface UIArtifact {
@@ -458,8 +462,26 @@ function PureArtifact({
                 setMetadata={setMetadata}
               />
             </div>
-
             <div className="dark:bg-muted bg-background h-full overflow-y-scroll !max-w-full items-center">
+              <div className={'flex flex-row py-12 px-20'}>
+                {/*<pre>{JSON.stringify(document?.parts, null, 2)}</pre>*/}
+
+                {get(document, ['parts'], []).map((document, index) => {
+                  switch (document.type) {
+                    case DocumentArtifactKind.PBD_Data:
+                      return (
+                        <MoleculeViewer
+                          key={`${document.type}_${index}`}
+                          pdbData={get(document, ['data', 'fileId'])}
+                        />
+                      );
+                    case DocumentArtifactKind.PREDICTED_PROPERTIES:
+                      return null;
+                    default:
+                      return null;
+                  }
+                })}
+              </div>
               <artifactDefinition.content
                 title={artifact.title}
                 content={
@@ -479,7 +501,6 @@ function PureArtifact({
                 metadata={metadata}
                 setMetadata={setMetadata}
               />
-
               <AnimatePresence>
                 {isCurrentVersion && (
                   <Toolbar
