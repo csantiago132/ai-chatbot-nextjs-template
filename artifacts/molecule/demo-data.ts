@@ -22,7 +22,7 @@ const predictedProperties = {
 };
 
 const pdbDataObject = {
-  fileId: 'pdb:1A50',
+  fileId: 'pdb:1A2M',
 };
 
 export const pbdPayloadJsonString: string = JSON.stringify(
