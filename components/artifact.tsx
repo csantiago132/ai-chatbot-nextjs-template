@@ -12,6 +12,7 @@ import {
   type SetStateAction,
   useCallback,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
@@ -35,6 +36,7 @@ import equal from 'fast-deep-equal';
 import { ArtifactKind, DocumentArtifactKind } from '@/lib/enums';
 import { get } from 'lodash-es';
 import { MoleculeViewer } from '@/artifacts/molecule/molecule-visualizer';
+import { Carousel, CarouselProps } from '@/components/ui/data-cards';
 
 export const artifactDefinitions = [
   textArtifact,
@@ -248,7 +250,10 @@ function PureArtifact({
       : true;
 
   const { width: windowWidth, height: windowHeight } = useWindowSize();
-  const isMobile = windowWidth ? windowWidth < 768 : false;
+
+  const checkMobileSize = () => windowWidth ? windowWidth < 768 : false;
+
+  const isMobile = checkMobileSize()
 
   const artifactDefinition = artifactDefinitions.find(
     (definition) => definition.kind === artifact.kind,
@@ -268,6 +273,50 @@ function PureArtifact({
       }
     }
   }, [artifact.documentId, artifactDefinition, setMetadata]);
+
+  const cardWidth = checkMobileSize() ? '230px' : '384px';
+  const cardHeight = checkMobileSize() ? '430px' : '584px';
+
+  const carouselItems: CarouselProps['items'] = useMemo(() => {
+    const containerProps = {
+      width: cardWidth,
+      minWidth: cardWidth,
+      height: cardHeight,
+      maxHeight: cardHeight
+    };
+
+    return get(document, ['parts'], []).map((document, index) => {
+      switch (document.type) {
+        case DocumentArtifactKind.PBD_Data:
+          return {
+            node: (
+              <MoleculeViewer
+                key={`${document.type}_${index}`}
+                pdbData={get(document, ['data', 'fileId'])}
+                style={containerProps}
+              />
+            ),
+            containerProps,
+          };
+        case DocumentArtifactKind.PREDICTED_PROPERTIES:
+          return {
+            node: (
+              <MoleculeViewer
+                key={`${document.type}_${index}`}
+                pdbData={get(document, ['data', 'fileId'], 'pdb:2nbd')}
+                style={containerProps}
+              />
+            ),
+            containerProps,
+          };
+        default:
+          return {
+            node: null,
+            containerProps,
+          };
+      }
+    });
+  }, [document, cardWidth, cardHeight]);
 
   return (
     <AnimatePresence>
@@ -463,25 +512,8 @@ function PureArtifact({
               />
             </div>
             <div className="dark:bg-muted bg-background h-full overflow-y-scroll !max-w-full items-center">
-              <div className={'flex flex-row py-12 px-20'}>
-                {/*<pre>{JSON.stringify(document?.parts, null, 2)}</pre>*/}
-
-                {get(document, ['parts'], []).map((document, index) => {
-                  switch (document.type) {
-                    case DocumentArtifactKind.PBD_Data:
-                      return (
-                        <MoleculeViewer
-                          key={`${document.type}_${index}`}
-                          pdbData={get(document, ['data', 'fileId'])}
-                        />
-                      );
-                    case DocumentArtifactKind.PREDICTED_PROPERTIES:
-                      return null;
-                    default:
-                      return null;
-                  }
-                })}
-              </div>
+              {/*<pre>{JSON.stringify(document?.parts, null, 2)}</pre>*/}
+              <Carousel items={carouselItems} />
               <artifactDefinition.content
                 title={artifact.title}
                 content={

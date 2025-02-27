@@ -46,7 +46,9 @@ export const documentDemoParts = [
     type: DocumentArtifactKind.PREDICTED_PROPERTIES,
     data: predictedProperties,
   },
-  { type: DocumentArtifactKind.PBD_Data, data: pdbDataObject },
+  { type: DocumentArtifactKind.PBD_Data, data: {...pdbDataObject, fileId: pdbDataObject.fileId} },
+  { type: DocumentArtifactKind.PBD_Data, data: {...pdbDataObject, fileId: 'pdb:2nbd'}  },
+  { type: DocumentArtifactKind.PBD_Data, data: {...pdbDataObject, fileId: 'pdb:9B3W'}  },
 ];
 
 export const chatDemoParts: Array<{
