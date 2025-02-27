@@ -29,9 +29,7 @@ export const Overview = () => {
           >
             open source
           </Link>{' '}
-          chatbot template built with Next.js and the AI SDK by Vercel. It is my
-          submission for the Founding Frontend Engineer role at a Stealth
-          Startup.
+          chatbot template built with Next.js and the AI SDK by Vercel.
         </p>
         <p>
           Press &#34;Show me the molecule visualizer demo&#34; below—it&#39;ll
@@ -40,17 +38,7 @@ export const Overview = () => {
           3D structure. Alongside it, a Predicted Toxicity Panel will display
           insights on its potential toxicity.
         </p>
-        <p>
-          You can learn more about the AI SDK by visiting the{' '}
-          <Link
-            className="font-medium underline underline-offset-4"
-            href="https://sdk.vercel.ai/docs"
-            target="_blank"
-          >
-            docs
-          </Link>
-          .
-        </p>
+        <p>Check it out on mobile, tablet, or desktop.</p>
       </div>
     </motion.div>
   );
